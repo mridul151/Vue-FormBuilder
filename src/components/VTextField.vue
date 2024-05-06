@@ -2,8 +2,9 @@
   <v-text-field
     :value="value"
     :label="label"
-    :placeholder="placeholder"
-    @input="$emit('input', $event)"
+    :type="type"
+    :outlined="outlined"
+    @input="handleInput"
   ></v-text-field>
 </template>
 
@@ -13,15 +14,27 @@ export default {
   props: {
     label: {
       type: String,
-      default: ''
+      default: 'Text Field'
     },
-    placeholder: {
+    type: {
       type: String,
-      default: ''
+      default: 'text'
+    },
+    outlined: {
+      type: Boolean,
+      default: true
     },
     value: {
       type: String,
       default: ''
+    }
+  },
+  methods: {
+    handleInput(event) {
+      const newValue = event.target.value;
+      if (newValue !== this.value) {
+        this.$emit('input', newValue);
+      }
     }
   }
 }
