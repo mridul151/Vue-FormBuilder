@@ -25,7 +25,9 @@
           <v-tab-items v-model="activeTab">
             <v-tab-item key="layout">
               <!-- Layout content here -->
-              <component :is="selectedComponentObject" v-if="selectedComponentObject"></component>
+<div v-for="(comp, index) in layoutComponents" :key="index">
+      <component :is="comp"></component>
+    </div>
             </v-tab-item>
             <v-tab-item key="preview">
               <!-- Preview content here -->
@@ -90,7 +92,8 @@ export default {
       tabData: {},
       availableComponents: ['VForm', 'VTextField', 'VButton'],
       selectedComponent: null,
-      selectedComponentObject: null
+      selectedComponentObject: null,
+      layoutComponents: []
     };
   },
 
@@ -111,8 +114,18 @@ export default {
       this.selectedComponentObject = null;
     },
     addComponent() {
-      this.selectedComponentObject = this.$options.components[this.selectedComponent];
-      this.closeSidebar();
+
+    let comp={
+    "Vform":VForm,
+    "VTextField":VTextField,
+    "VButton":VButton
+    };
+
+    if (this.selectedComponent) {
+    // Fix the typo here
+    this.layoutComponents.push(comp[this.selectedComponent]);
+  }
+  this.closeSidebar();
     },
     fetchMainTabsData() {
       axios.get('https://run.mocky.io/v3/36ec4c74-ca38-4ae0-b671-65238d2e9e3d')
