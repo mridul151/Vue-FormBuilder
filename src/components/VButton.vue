@@ -4,7 +4,7 @@
     :outlined="outlined"
     @click="$emit('click')"
   >
-    <slot></slot>
+    {{ buttonText }}
   </v-btn>
 </template>
 
@@ -19,6 +19,15 @@ export default {
     outlined: {
       type: Boolean,
       default: false
+    },
+    buttonText: {
+      type: String,
+      default: 'Button'
+    },
+    // New prop for the text on the button
+    text: {
+      type: String,
+      default: 'Button Text'
     }
   }
 }
